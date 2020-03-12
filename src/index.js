@@ -5,18 +5,11 @@ import ReactDOM from "react-dom";
 //   dsn: "https://70cd0cb5f0c04de18bbd9a15203ff3c8@sentry.io/4160835",
 //   debug: true
 // });
-const { ipcRenderer } = require("electron");
-const { crash } = global.process || {};
+import "../public/sentry";
+const electron = window.require("electron");
+const { ipcRenderer } = electron;
 import "../public/sentry";
 import User from "./components/users";
-
-window.crashRenderer = crash;
-
-window.versions = {
-  chrome: process.versions.chrome,
-  electron: process.versions.electron,
-  node: process.versions.node
-};
 const App = () => {
   const handleClick = () => {
     let a;
@@ -27,16 +20,21 @@ const App = () => {
   const handleError = () => {
     console.lo("A");
   };
-  const renderContent = () => {
-    const data = null;
-    return data.map(item => {
-      return <div>AAA</div>;
-    });
+  const hanleCrashMainApp = () => {
+    ipcRenderer.send("crash-app");
+  };
+
+  const handleErrorByLogicMain = () => {
+    ipcRenderer.send("error-by-logic");
   };
   return (
     <div>
       <button onClick={handleClick}>Click</button>
       <button onClick={handleError}>Error</button>
+      <button onClick={hanleCrashMainApp}>Crash main app</button>
+      <button onClick={handleErrorByLogicMain}>
+        Error By Logic On Main Process
+      </button>
       {/* {renderContent()} */}
       <User data={[{ name: 1 }]} />
     </div>

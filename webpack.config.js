@@ -12,9 +12,9 @@ module.exports = {
     path: path.join(__dirname, "/build")
   },
   externals: {
-    electron: 'commonjs electron',
+    electron: "commonjs electron"
   },
-  target: 'electron-renderer',
+  target: "electron-renderer",
   module: {
     rules: [{
       exclude: /node_modules/,
@@ -26,14 +26,14 @@ module.exports = {
     new hwp({
       template: path.join(__dirname, "/public/index.html")
     }),
-    new SentryWebpackPlugin({
-      include: "build",
-      ignoreFile: ".sentrycliignore",
-      ignore: ["node_modules", "webpack.config.js"],
-      configFile: ".sentryclirc",
-      release: "v4",
-      urlPrefix: "~/build/"
-    })
+    // new SentryWebpackPlugin({
+    //   include: "build",
+    //   ignoreFile: ".sentrycliignore",
+    //   ignore: ["node_modules", "webpack.config.js"],
+    //   configFile: ".sentryclirc",
+    //   release: "v5",
+    //   urlPrefix: "~/build/"
+    // })
   ],
   optimization: {
     minimize: true,

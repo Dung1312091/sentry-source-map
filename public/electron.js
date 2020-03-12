@@ -1,14 +1,10 @@
 const electron = require("electron");
-const {
-  app,
-  BrowserWindow,
-  ipcMain
-} = electron;
+const { app, BrowserWindow, ipcMain } = electron;
 const peocessElectron = electron.process;
 const path = require("path");
 const isDev = require("electron-is-dev");
 const debug = require("electron-debug");
-require('./sentry');
+require("./sentry");
 isDev && debug();
 let mainWindow;
 
@@ -31,7 +27,8 @@ function logError(error) {
 electron.crashReporter.start({
   companyName: "Demo",
   productName: "my-electron-crasher",
-  submitURL: "http://localhost:3001/crash-report",
+  submitURL:
+    "https://sentry.io/api/4160835/minidump/?sentry_key=70cd0cb5f0c04de18bbd9a15203ff3c8",
   ignoreSystemCrashHandler: true,
   uploadToServer: true,
   autoSubmit: true
@@ -51,9 +48,7 @@ function createWindow() {
     }
   });
 
-  mainWindow.loadURL(
-    `file://${path.join(__dirname, "../build/index.html")}`
-  );
+  mainWindow.loadURL(`file://${path.join(__dirname, "../build/index.html")}`);
   mainWindow.on("closed", () => (mainWindow = null));
 
   // mainWindow.webContents.on('crashed', e => {
@@ -103,28 +98,22 @@ ipcMain.on("error-by-not-responding", () => {
   }
 });
 // Catch Exception
-process.on("uncaughtException", function (error, origin) {
-  console.error("uncaughtException");
-  logError(error);
-  console.log("origin====>", origin);
-});
-process.on("unhandledRejection", (error, origin) => {
-  console.error("unhandledRejection");
-  logError(error);
-  console.log("origin====>", origin);
-});
-
-app.on("renderer-process-crashed", function (event, webContents, killed) {
-  console.log("renderer-process-crashed", event);
-  console.log("webContents", webContents);
-  console.log("killed", killed);
-});
-ipcMain.on('demo.error', () => {
-  console.log('Error triggered in main processes');
-  throw new Error('Error triggered in main processes');
+// process.on("uncaughtException", function (error, origin) {
+//   console.error("uncaughtException");
+//   logError(error);
+//   console.log("origin====>", origin);
+// });
+// process.on("unhandledRejection", (error, origin) => {
+//   console.error("unhandledRejection");
+//   logError(error);
+//   console.log("origin====>", origin);
+// });
+ipcMain.on("demo.error", () => {
+  console.log("Error triggered in main processes");
+  throw new Error("Error triggered in main processes");
 });
 
-ipcMain.on('demo.crash', () => {
-  console.log('process.crash()');
+ipcMain.on("demo.crash", () => {
+  console.log("process.crash()");
   process.crash();
 });
