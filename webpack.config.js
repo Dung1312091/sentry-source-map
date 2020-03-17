@@ -6,6 +6,7 @@ const TerserPlugin = require("terser-webpack-plugin");
 const fs = require("fs");
 module.exports = {
   devtool: "source-map",
+  mode: "production",
   entry: path.join(__dirname, "/src/index.js"),
   output: {
     filename: "bundle.js",

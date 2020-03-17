@@ -1,11 +1,11 @@
 const electron = require("electron");
 const { app, BrowserWindow, ipcMain } = electron;
-const peocessElectron = electron.process;
 const path = require("path");
 const isDev = require("electron-is-dev");
 const debug = require("electron-debug");
-require("./sentry");
-isDev && debug();
+const fs = require("fs-extra");
+const { CONFIG_NAME } = require("../sentry/index.js");
+debug();
 let mainWindow;
 
 function logError(error) {
@@ -27,8 +27,7 @@ function logError(error) {
 electron.crashReporter.start({
   companyName: "Demo",
   productName: "my-electron-crasher",
-  submitURL:
-    "https://sentry.io/api/4160835/minidump/?sentry_key=70cd0cb5f0c04de18bbd9a15203ff3c8",
+  submitURL: "",
   ignoreSystemCrashHandler: true,
   uploadToServer: true,
   autoSubmit: true
@@ -44,17 +43,23 @@ function createWindow() {
     width: 900,
     height: 680,
     webPreferences: {
-      nodeIntegration: true
+      nodeIntegration: true,
+      preload: path.join(__dirname, "../sentry/index.js")
     }
   });
 
   mainWindow.loadURL(`file://${path.join(__dirname, "../build/index.html")}`);
   mainWindow.on("closed", () => (mainWindow = null));
-
+  mainWindow.webContents.openDevTools();
   // mainWindow.webContents.on('crashed', e => {
   //   console.log("crashed===>", e);
   //   app.relaunch();
   //   // app.quit()
+  // });
+  // const appData = app.getPath("appData");
+  // fs.writeJsonSync(`${appData}/sentry-with-source-map/sentry-config.json`, {
+  //   dsn: "https://70cd0cb5f0c04de18bbd9a15203ff3c8@sentry.io/4160835",
+  //   enable: true
   // });
 }
 app.on("ready", createWindow);
@@ -116,4 +121,23 @@ ipcMain.on("demo.error", () => {
 ipcMain.on("demo.crash", () => {
   console.log("process.crash()");
   process.crash();
+});
+//IPC
+ipcMain.once("synchronous-message", (event, arg) => {
+  console.log("event", event);
+  setTimeout(() => {
+    event.returnValue = "pong";
+  }, 1000);
+});
+
+ipcMain.once("ipc-once", (event, arg) => {
+  console.log("ipc-once", arg);
+});
+
+ipcMain.handle("my-invokable-ipc", (event, ...args) => {
+  return args[0] + args[1];
+});
+
+ipcMain.handleOnce("my-invokable-ipc-once", (event, ...args) => {
+  return args[0] + args[1];
 });
