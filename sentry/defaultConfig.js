@@ -1,6 +1,6 @@
 module.exports = {
   config: {
-    dsn: "https://70cd0cb5f0c04de18bbd9a15203ff3c8@sentry.io/4160835"
+    dsn: "https://02330e4d14b844468099c4134080fe16@sentry.io/4543967"
   },
   enable: true
 };

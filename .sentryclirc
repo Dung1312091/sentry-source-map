@@ -1,6 +1,6 @@
 [defaults]
 url =https://sentry.io/
 org =dung-ww
-project =webpack-sentry
+project =react
 [auth]
 token =428d42d8543740d392036475eb04b87514c5ac1ff2da45a1b2812293fbfa7877

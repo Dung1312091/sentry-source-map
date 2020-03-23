@@ -39,6 +39,8 @@ electron.crashReporter.start({
 });
 
 function createWindow() {
+  console.log("vao thu 2");
+
   mainWindow = new BrowserWindow({
     width: 900,
     height: 680,
@@ -69,6 +71,7 @@ app.on("window-all-closed", () => {
   }
 });
 app.on("activate", () => {
+  console.log("vao dau tien");
   if (mainWindow === null) {
     createWindow();
   }

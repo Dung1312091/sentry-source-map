@@ -89,6 +89,8 @@ const App = () => {
       <button onClick={handleIpcOne}>IPC Once</button>
       <button onClick={handleIpcHandle}>IPC Handle</button>
       <button onClick={handleIpcHandleOnce}>IPC Handle Once</button>
+      <button onClick={() => {console.lo("vao ne")}}>Click Bugs 1</button>
+      <button onClick={() => {null.forEach((item)=>{console.log(item)})}}>Click Bugs 2</button>
     </ExampleBoundary>
   );
 };

@@ -17,22 +17,24 @@ module.exports = {
   },
   target: "electron-renderer",
   module: {
-    rules: [{
-      exclude: /node_modules/,
-      test: /\.js$/,
-      loader: "babel-loader"
-    }]
+    rules: [
+      {
+        exclude: /node_modules/,
+        test: /\.js$/,
+        loader: "babel-loader"
+      }
+    ]
   },
   plugins: [
     new hwp({
       template: path.join(__dirname, "/public/index.html")
-    }),
+    })
     // new SentryWebpackPlugin({
     //   include: "build",
     //   ignoreFile: ".sentrycliignore",
     //   ignore: ["node_modules", "webpack.config.js"],
     //   configFile: ".sentryclirc",
-    //   release: "v5",
+    //   release: "1.0.6",
     //   urlPrefix: "~/build/"
     // })
   ],
