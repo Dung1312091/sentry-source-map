@@ -25,7 +25,7 @@
     "@sentry/cli": "^1.51.1",
     "@sentry/webpack-plugin": "^1.10.0",
     "babel-loader": "^8.0.6",
-    "electron": "^8.1.1",
+    "electron": "^15.5.5",
     "electron-builder": "^22.4.0",
     "electron-fix": "^1.1.2",
     "terser-webpack-plugin": "^2.3.5",
